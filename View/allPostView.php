@@ -1,5 +1,8 @@
-<?php
 
+
+// Vue de tous les postes
+
+<?php
 
 while ($donnees = $posts->fetch())
 {

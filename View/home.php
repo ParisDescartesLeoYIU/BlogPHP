@@ -1,3 +1,6 @@
+
+//template de la vue
+
 <!DOCTYPE html>
 <html>
     <head>

@@ -1,4 +1,7 @@
 
+
+// Vue pour le poste d'article
+
 <p><a href="index.php">Retour à la page d'accueil </a></p>
 
 <h2>Ecrire un nouveau post</h2>

@@ -2,6 +2,7 @@
 require('model/postManager.php');
 session_start();
 
+// Routeur
 
 if (isset($_GET['action'])){
 
@@ -125,10 +126,16 @@ if (isset($_GET['action'])){
             break;
     }
 }
+
+//Retour a la page d'accueil
 else {
     accueil();
 
 }
+
+
+//Fonction du Controlleur
+
 
 function showPosts() {
     $posts = getAllPosts();

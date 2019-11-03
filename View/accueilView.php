@@ -1,3 +1,6 @@
+
+// Vue de la Page d'accueil
+
 <?php
 
 while ($donnees = $posts->fetch())

@@ -1,5 +1,7 @@
 
 
+// Vue détailler d'un Article
+
 <p><a href="index.php">Accueil</a></p>
     <h2>
         <?php

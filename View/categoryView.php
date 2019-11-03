@@ -1,4 +1,8 @@
 
+
+// Vu de la page des Catégories
+
+
 <p><a href="index.php">Retour à la page d'accueil </a></p>
 <h2>Ajouter une nouvelle Categorie</h2>
 

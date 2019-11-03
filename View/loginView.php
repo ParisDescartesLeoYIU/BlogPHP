@@ -1,4 +1,6 @@
 
+// Vue pour la page de connexion
+
 <p><a href="index.php">Accueil</a></p>
 <h1>Connexion</h1>
 <form method="POST" action="index.php?action=verifyUser">
