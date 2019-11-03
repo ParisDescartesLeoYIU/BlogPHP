@@ -6,4 +6,6 @@ Utilisation de MySQL et de WAMP
 
 (Le Docker-File ne fonctionne pas)
 
-Le routeur/Controlleur se trouve dans le fichier index.php
+Le routeur se trouve dans le fichier index.php.
+
+Le controlleur se trouve à la racine du projet
