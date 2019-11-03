@@ -9,3 +9,5 @@ Utilisation de MySQL et de WAMP
 Le routeur se trouve dans le fichier index.php.
 
 Le controlleur se trouve à la racine du projet
+
+Pas de CSS ou de Bootstrap
