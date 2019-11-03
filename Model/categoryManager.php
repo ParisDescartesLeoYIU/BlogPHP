@@ -3,6 +3,7 @@
 include_once('connect.php');
 
 
+
 function postCategory($name)
 {
     $db = dbConnect();
@@ -11,3 +12,4 @@ function postCategory($name)
 
     return $newCategorie;
 }
+

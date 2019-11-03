@@ -7,8 +7,17 @@
     <input type='submit'>
 </form>
 
-<?php
-$content = ob_get_clean();
-?>
 
-<?php require('home.php') ?>
+<h3>Les categories existantes sont : </h3>
+
+<?php
+foreach($categories as $category) {
+?>
+   <li> <?php echo $category['name'] ;?></li>
+
+<?php
+
+}
+
+$content = ob_get_clean();
+require('home.php') ?>

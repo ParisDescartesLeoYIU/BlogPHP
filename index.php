@@ -8,6 +8,16 @@ if (isset($_GET['action'])){
     switch ($_GET['action']) {
 
 
+        case 'showPosts':
+            showPosts();
+            break;
+
+        case 'accueil':
+
+            accueil();
+            break;
+
+
         case 'showPost':
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 showPost();
@@ -18,12 +28,12 @@ if (isset($_GET['action'])){
             break;
 
 
+
         case 'addCategory':
-             if(!empty($_POST['name'])){
-                 addCategory($_POST['name']);
-             }
-             else {
-                 var_dump($_POST['name']);
+            if(!empty($_POST['name'])){
+                addCategory($_POST['name']);
+            }
+            else {
                 echo 'Veuillez mettre un nom pour la categorie';
             }
 
@@ -46,7 +56,7 @@ if (isset($_GET['action'])){
         case 'addComment':
             if (isset($_GET['id']) && $_GET['id'] > 0) {
                 if (!empty($_POST['content'])) {
-                    addComment($_GET['id'], $_POST['content']);
+                    addComment($_GET['id'], $_SESSION['username'],$_POST['content']);
                 }
                 else {
                     echo 'Veuillez ecrire un commentaire !';
@@ -58,6 +68,8 @@ if (isset($_GET['action'])){
             break;
 
         case 'showCategory':
+
+            $categories = getCategories();
             require('view/categoryView.php');
             break;
 
@@ -66,13 +78,21 @@ if (isset($_GET['action'])){
             break;
 
         case 'showPosting':
-            $categories = getCategories();
-            require('view/postingView.php');
-            break;
 
+
+           $categories = getCategories();
+           $testCategory= getTestCategory();
+            if ($testCategory=== false){
+                echo "Attention Aucune categorie existante, Veuillez Creer une categorie";
+                break;
+            }
+            else{
+           require('view/postingView.php');
+            break;
+            }
         case 'disconnectUser':
             session_destroy();
-            header('Location: index.php?action=showPosts');
+            header('Location: index.php?action=accueil');
             break;
 
         case 'newUser':
@@ -88,19 +108,37 @@ if (isset($_GET['action'])){
             }
             break;
 
+        case 'delete':
+            delete();
+            break;
+
+
+        case 'deleteComment':
+            deleteCommentaire();
+            break;
+
+        case 'deleteCategorie':
+            deleteCategorie();
+            break;
         default:
-            showPosts();
+            echo "erreur cette page n'existe pas" ;
             break;
     }
 }
 else {
-    showPosts();
+    accueil();
 
 }
 
 function showPosts() {
+    $posts = getAllPosts();
+    require('view/allPostView.php');
+}
+
+
+function accueil() {
     $posts = getPosts();
-    require('view/indexView.php');
+    require('view/accueilView.php');
 }
 
 function showPost() {
@@ -108,6 +146,9 @@ function showPost() {
     $comments = getComments($_GET['id']);
     require('view/postView.php');
 }
+
+
+
 
 function addCategory($name) {
 
@@ -117,7 +158,7 @@ function addCategory($name) {
         die('Ajout impossible de categorie');
     }
     else {
-        header('Location: index.php?action=showPosts');
+        header('Location: index.php?action=accueil');
     }
 
 }
@@ -128,13 +169,13 @@ function addPost($title,  $content, $imagePath, $idUser ,$idCategory) {
         die('Impossible de poster');
     }
     else {
-        header('Location: index.php?action=showPosts');
+        header('Location: index.php?action=accueil');
     }
 }
 
-function addComment($idPost, $content) {
+function addComment($idPost, $autheur, $content) {
     require('model/commentsManager.php');
-    $newComment = postComment($idPost, $content);
+    $newComment = postComment($idPost, $autheur, $content);
     if ($newComment === false) {
         die('Impossible de mettre un commentaire');
     }
@@ -142,14 +183,32 @@ function addComment($idPost, $content) {
         header('Location: index.php?action=showPost&id=' . $idPost);
     }
 }
+
+
+
+function delete() {
+
+    $delete = deletePost($_GET['id']);
+    header('Location: index.php?action=accueil');
+}
+
+function deleteCommentaire() {
+    $postid = deleteComment($_GET['id']);
+
+    header('Location: index.php?action=showPost&id='.$postid);
+}
+
+
+
 function newUser($username, $password) {
     require('model/userManager.php');
     $hashpassword = password_hash($password, PASSWORD_DEFAULT);
-     addUser($username, $hashpassword);
-
+    addUser($username, $hashpassword);
     header('Location: index.php?action=showLogin');
 
 }
+
+
 
 function verifyUser($username, $password) {
 
@@ -159,17 +218,12 @@ function verifyUser($username, $password) {
     if($correctPassword) {
         $_SESSION['username'] = $username;
         $_SESSION['id'] = $result['id'];
-        header('Location: index.php?action=showPosts');
+        header('Location: index.php?action=accueil');
     }
     elseif(!$correctPassword) {
         echo 'Vous vous etes tromper de Mot de passe';
 
     }
-}
-
-function disconnectUser() {
-    session_destroy();
-    header('Location: index.php?action=showPosts');
 }
 
 function getImgUrl()

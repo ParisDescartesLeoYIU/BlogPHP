@@ -15,14 +15,12 @@
 
         <?php
         }
-
         if(empty($_SESSION['username'])) {
         ?>
             <li><a href="index.php?action=showLogin">Connexion/Inscription</a></li>
 
         <?php
         }
-
         else {
         ?>
            <li><a href="index.php?action=showCategory"> Creer categorie</a></li>

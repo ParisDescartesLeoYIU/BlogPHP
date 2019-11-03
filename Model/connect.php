@@ -12,7 +12,3 @@ function dbConnect ()
         die();
     }
 }
-
-
-?>
-

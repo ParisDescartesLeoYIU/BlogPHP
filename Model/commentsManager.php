@@ -1,14 +1,12 @@
 <?php
 
-include_once('dbManager.php');
+include_once('connect.php');
 
-
-function postComment($idPost, $content)
+function postComment($idPost, $autheur , $content)
 {
     $db = dbConnect();
-    $comments = $db->prepare('INSERT INTO comments(idPost,content) VALUES(?, ?)');
-    $newComment = $comments->execute(array($idPost,  $content));
+    $comments = $db->prepare('INSERT INTO comments(idPost,autheur,content) VALUES(?, ?, ?)');
+    $newComment = $comments->execute(array($idPost, $autheur, $content));
 
     return $newComment;
 }
-
